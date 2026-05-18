@@ -1,0 +1,53 @@
+/* style.css */
+
+/* Configuration structurelle du corps de la page */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    text-align: center;
+    padding: 30px;
+    color: #333;
+}
+
+/* Modèle de boîte (Card CSS) pour les formulaires et encarts statistiques */
+.form-container {
+    background-color: white;
+    max-width: 450px;
+    margin: 20px auto;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1); /* Ombrage léger pour l'UX */
+}
+
+/* Harmonisation des zones de saisie textuelles et des menus déroulants select */
+input, select {
+    width: 90%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Évite le débordement de la boîte */
+}
+
+/* Mise en valeur des étiquettes de formulaires */
+label {
+    display: inline-block;
+    margin-top: 12px;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+/* Titres de sous-sections du formulaire */
+h3 {
+    margin-top: 15px;
+    color: #0066cc;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
+
+/* Configuration des listes à puces pour les fiches de résultats générées */
+ul {
+    padding-left: 20px;
+    font-size: 1.05em;
+    line-height: 1.8;
+}
