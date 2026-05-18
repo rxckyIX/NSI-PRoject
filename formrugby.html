@@ -7,10 +7,10 @@
 </head>
 <body>
     <h1>Enregistrer une nouvelle feuille de match</h1>
-    <a href="dashboard_rugby.html">⬅ Annuler et retourner au Dashboard</a>
+    <a href="dashboard_rugby.html">⬅ Retour au Dashboard de Rugby</a>
 
     <div class="form-container">
-        <form action="/upload_rugby" method="POST">
+        <form action="http://127.0.0.1:5000/upload_rugby" method="POST">
             
             <h3>Informations Générales (Obligatoires)</h3>
             <input type="text" name="titre_match" placeholder="Titre du match (ex: Finale Inter-Lycee)" required><br>
@@ -43,9 +43,8 @@
             </select><br>
 
             <h3>Données Scientifiques Avancées (Optionnelles)</h3>
-            <p style="font-size: 0.8em; color: #777; margin-bottom: 10px;">
-                Laissez ces champs vides s'ils n'ont pas pu être mesurés (valeur par défaut : N/A).
-            </p>
+            <p style="font-size: 0.8em; color: #777; margin-bottom: 10px;">Laissez ces champs vides s'ils n'ont pas pu être mesurés (valeur par défaut : N/A).</p>
+            
             <input type="number" name="passes" placeholder="Passes réussies"><br>
             <input type="number" name="plaquages" placeholder="Plaquages effectués"><br>
             <input type="number" name="temps_jeu" placeholder="Temps de jeu effectif (minutes)"><br>

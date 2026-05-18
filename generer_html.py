@@ -3,32 +3,27 @@ import os
 
 def normaliser_nom_fichier(titre, date):
     """
-    Algorithme de traitement de chaînes (Sanitizer) convertissant le titre et la date
-    en un nom de fichier standardisé propre pour le Système d'Exploitation (os).
-    Exemple: 'Match Amical' et '2026-05-19' -> 'match_match-amical_2026-05-19.html'
+    Algorithme de traitement de chaînes convertissant le titre et la date
+    en un nom de fichier standardisé dénué de caractères spéciaux et d'espaces.
     """
-    # Passage en minuscules et substitution des espaces par des tirets
     titre_sain = titre.lower().replace(" ", "-")
-    
-    # Boucle d'exclusion des caractères spéciaux proscrits par les OS ou perturbants dans une URL
     for caractere in [":", "/", "'", ".", ",", '"', "?", "!", "@", "#", "$", "*"]:
         titre_sain = titre_sain.replace(caractere, "")
-        
     return f"match_{titre_sain}_{date}.html"
 
 
 def creer_page_match(donnees):
     """
     Prend en paramètre le dictionnaire de données validées et écrit physiquement
-    la page finale statique sur le disque dur à l'aide d'un gabarit de chaîne (Template).
+    la page finale statique sur le disque dur.
     """
-    # Calcul dynamique sécurisé du nom du fichier grâce à notre fonction algorithmique
+    # Calcul dynamique du nom du fichier
     nom_fichier = normaliser_nom_fichier(donnees["titre_match"], donnees["date_match"])
     
-    # Formatage de l'encart d'affichage du score collectif
+    # Agrégation du score collectif
     score_global = f"{donnees['score_notre_equipe']} - {donnees['score_adversaire']}"
     
-    # Définition du gabarit de chaîne multi-lignes (f-string) faisant office de moule Markup HTML
+    # Définition du gabarit HTML structurel (Moule Markup de Lambert)
     contenu_html = f"""<!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -74,9 +69,9 @@ def creer_page_match(donnees):
 </html>
 """
     
-    # Processus d'écriture physique sur le disque dur (Operating System) via open() en mode 'w'
-    # L'argument encoding='utf-8' évite les corruptions de caractères sur les accents (ex: 'Défaite')
+    # Écriture physique sur le disque dur
     with open(nom_fichier, 'w', encoding='utf-8') as fichier_html:
+        # CORRECTION DU BUG : Utilisation de la variable correcte 'contenu_html'
         fichier_html.write(contenu_html)
         
-    print(f"[JAMstack Generator] Fiche de match matérialisée sur le disque : {nom_fichier}")
+    print(f"[JAMstack Generator] Fiche de match matérialisée : {nom_fichier}")
