@@ -78,6 +78,7 @@ def receptionner_formulaire_rugby():
     
     # 3. Activation du Générateur JAMstack pour créer la page de match autonome
     generer_html.creer_page_match_rugby(donnees_propres)
+    return "Fiche de match rugby créée avec succès." + ()
 
 # ===== FOOTBALL =====
 def valider_et_filtrer_donnees_football(donnees_brutes):
@@ -136,6 +137,7 @@ def receptionner_formulaire_football():
     
     # 3. Activation du Générateur JAMstack pour créer la page de match autonome
     generer_html.creer_page_match_football(donnees_propres)
+    return "Fiche de match football créée avec succès."
 
 
 # ===== BASKETBALL =====
@@ -196,6 +198,7 @@ def receptionner_formulaire_basketball():
     
     # 3. Activation du Générateur JAMstack pour créer la page de match autonome
     generer_html.creer_page_match_basketball(donnees_propres)
+    return "Fiche de match basketball créée avec succès."
     
   
 

@@ -12,7 +12,7 @@ def normaliser_nom_fichier(titre, date):
     return f"match_{titre_sain}_{date}.html"
 
 
-def creer_page_match(donnees):
+def creer_page_match_rugby(donnees):
     """
     Prend en paramètre le dictionnaire de données validées et écrit physiquement
     la page finale statique sur le disque dur.
