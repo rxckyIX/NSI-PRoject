@@ -1,6 +1,5 @@
 # generer_html.py
 import os
-
 def normaliser_nom_fichier(titre, date):
     """
     Algorithme de traitement de chaînes convertissant le titre et la date
@@ -9,10 +8,10 @@ def normaliser_nom_fichier(titre, date):
     titre_sain = titre.lower().replace(" ", "-")
     for caractere in [":", "/", "'", ".", ",", '"', "?", "!", "@", "#", "$", "*"]:
         titre_sain = titre_sain.replace(caractere, "")
-    return f"match_{titre_sain}_{date}.html"
+    return f"match_{titre_sain}_{date}"
 
 
-def creer_page_match(donnees):
+def creer_page_match_rugby(donnees):
     """
     Prend en paramètre le dictionnaire de données validées et écrit physiquement
     la page finale statique sur le disque dur.
@@ -22,6 +21,14 @@ def creer_page_match(donnees):
     
     # Agrégation du score collectif
     score_global = f"{donnees['score_notre_equipe']} - {donnees['score_adversaire']}"
+    video_section = ""
+    if donnees.get("video_url") and donnees["video_url"] != "N/A":
+        video_section = f"""
+    <section style=\"margin: 30px 0;\">
+        <h2>Vidéo du match</h2>
+        <iframe src=\"{donnees['video_url']}\" width=\"100%\" height=\"480\" frameborder=\"0\" allowfullscreen loading=\"lazy\"></iframe>
+    </section>
+"""
     
     # Définition du gabarit HTML structurel (Moule Markup de Lambert)
     contenu_html = f"""<!DOCTYPE html>
@@ -29,7 +36,7 @@ def creer_page_match(donnees):
 <head>
     <meta charset="UTF-8">
     <title>{donnees["titre_match"]} - July Verny</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
     <h1>Fiche de Rencontre Rugby 🏉</h1>
@@ -41,6 +48,8 @@ def creer_page_match(donnees):
         <p style="font-size: 2em; margin: 10px 0; font-weight: bold; color: #111;">{score_global}</p>
         <p>Bilan de la confrontation : <strong>{donnees["resultat"]}</strong></p>
     </div>
+
+    {video_section}
 
     <div class="form-container" style="border-left: 5px solid #222; text-align: left;">
         <h3>Performances Individuelles Principales</h3>
@@ -64,17 +73,18 @@ def creer_page_match(donnees):
     </div>
 
     <br>
-    <a href="dashboard_rugby.html">⬅ Retour au Dashboard Rugby</a>
+    <a href="{{url_for('dashboard_rugby')}}">⬅ Retour au Dashboard Rugby</a>
 </body>
 </html>
 """
     
     # Écriture physique sur le disque dur
-    with open(nom_fichier, 'w', encoding='utf-8') as fichier_html:
-        # CORRECTION DU BUG : Utilisation de la variable correcte 'contenu_html'
+    output_dir = os.path.join('templates', 'matches', 'rugby')
+    os.makedirs(output_dir, exist_ok=True)
+    with open(os.path.join(output_dir, f"{nom_fichier}.html"), 'w', encoding='utf-8') as fichier_html:
         fichier_html.write(contenu_html)
-        
-    print(f"[JAMstack Generator] Fiche de match matérialisée : {nom_fichier}")
+
+    return nom_fichier
 
 
 def creer_page_match_football(donnees):
@@ -84,13 +94,21 @@ def creer_page_match_football(donnees):
     """
     nom_fichier = normaliser_nom_fichier(donnees["titre_match"], donnees["date_match"])
     score_global = f"{donnees['score_notre_equipe']} - {donnees['score_adversaire']}"
+    video_section = ""
+    if donnees.get("video_url") and donnees["video_url"] != "N/A":
+        video_section = f"""
+    <section style=\"margin: 30px 0;\">
+        <h2>Vidéo du match</h2>
+        <iframe src=\"{donnees['video_url']}\" width=\"100%\" height=\"480\" frameborder=\"0\" allowfullscreen loading=\"lazy\"></iframe>
+    </section>
+"""
 
     contenu_html = f"""<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>{donnees["titre_match"]} - July Verny</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
     <h1>Fiche de Rencontre Football ⚽</h1>
@@ -102,6 +120,8 @@ def creer_page_match_football(donnees):
         <p style="font-size: 2em; margin: 10px 0; font-weight: bold; color: #111;">{score_global}</p>
         <p>Résultat : <strong>{donnees["resultat"]}</strong></p>
     </div>
+
+    {video_section}
 
     <div class="form-container" style="border-left: 5px solid #00aa00; text-align: left;">
         <h3>Statistique Individuelle</h3>
@@ -122,15 +142,18 @@ def creer_page_match_football(donnees):
     </div>
 
     <br>
-    <a href="dashboard_football.html">⬅ Retour au Dashboard Football</a>
+    <a href="{{url_for('dashboard_football')}}">⬅ Retour au Dashboard Football</a>
 </body>
 </html>
 """
 
-    with open(nom_fichier, 'w', encoding='utf-8') as fichier_html:
+    output_dir = os.path.join('templates', 'matches', 'football')
+    os.makedirs(output_dir, exist_ok=True)
+    with open(os.path.join(output_dir, f"{nom_fichier}.html"), 'w', encoding='utf-8') as fichier_html:
         fichier_html.write(contenu_html)
 
     print(f"[JAMstack Generator] Fiche de match matérialisée : {nom_fichier}")
+    return nom_fichier
 
 
 def creer_page_match_basketball(donnees):
@@ -140,13 +163,21 @@ def creer_page_match_basketball(donnees):
     """
     nom_fichier = normaliser_nom_fichier(donnees["titre_match"], donnees["date_match"])
     score_global = f"{donnees['score_notre_equipe']} - {donnees['score_adversaire']}"
+    video_section = ""
+    if donnees.get("video_url") and donnees["video_url"] != "N/A":
+        video_section = f"""
+    <section style=\"margin: 30px 0;\">
+        <h2>Vidéo du match</h2>
+        <iframe src=\"{donnees['video_url']}\" width=\"100%\" height=\"480\" frameborder=\"0\" allowfullscreen loading=\"lazy\"></iframe>
+    </section>
+"""
 
     contenu_html = f"""<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>{donnees["titre_match"]} - July Verny</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
     <h1>Fiche de Rencontre Basketball 🏀</h1>
@@ -158,6 +189,8 @@ def creer_page_match_basketball(donnees):
         <p style="font-size: 2em; margin: 10px 0; font-weight: bold; color: #111;">{score_global}</p>
         <p>Résultat : <strong>{donnees["resultat"]}</strong></p>
     </div>
+
+    {video_section}
 
     <div class="form-container" style="border-left: 5px solid #ff6600; text-align: left;">
         <h3>Statistique Individuelle</h3>
@@ -178,12 +211,15 @@ def creer_page_match_basketball(donnees):
     </div>
 
     <br>
-    <a href="dashboard_basketball.html">⬅ Retour au Dashboard Basketball</a>
+    <a href="{{url_for('dashboard_basketball')}}">⬅ Retour au Dashboard Basketball</a>
 </body>
 </html>
 """
 
-    with open(nom_fichier, 'w', encoding='utf-8') as fichier_html:
+    output_dir = os.path.join('templates', 'matches', 'basketball')
+    os.makedirs(output_dir, exist_ok=True)
+    with open(os.path.join(output_dir, f"{nom_fichier}.html"), 'w', encoding='utf-8') as fichier_html:
         fichier_html.write(contenu_html)
 
     print(f"[JAMstack Generator] Fiche de match matérialisée : {nom_fichier}")
+    return nom_fichier
