@@ -10,7 +10,7 @@
     <a href="{{ url_for('dashboard_football') }}">⬅ Retour au Dashboard Football</a>
     <div class="form-container">
         <!-- Formulaire d'envoi vers le backend Flask pour le football -->
-        <form action="http://127.0.0.1:5000/upload_football" method="POST">
+        <form action="{{ url_for('upload_football') }}" method="POST">
 
             <h3>Informations Générales (Obligatoires)</h3>
             <label for="titre_match">Titre du match :</label><br>
