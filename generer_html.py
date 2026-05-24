@@ -1,4 +1,5 @@
 # generer_html.py
+import os
 def normaliser_nom_fichier(titre, date):
     """
     Algorithme de traitement de chaînes convertissant le titre et la date
@@ -68,11 +69,10 @@ def creer_page_match_rugby(donnees):
 """
     
     # Écriture physique sur le disque dur
-    with open(f"{nom_fichier}.html", 'w', encoding='utf-8') as fichier_html:
+    with open(f"matches/rugby/{nom_fichier}.html", 'w', encoding='utf-8') as fichier_html:
         # CORRECTION DU BUG : Utilisation de la variable correcte 'contenu_html'
         fichier_html.write(contenu_html)
-        
-    print(f"[JAMstack Generator] Fiche de match matérialisée : {nom_fichier}")
+
     return nom_fichier
 
 
@@ -126,7 +126,7 @@ def creer_page_match_football(donnees):
 </html>
 """
 
-    with open(f"{nom_fichier}.html", 'w', encoding='utf-8') as fichier_html:
+    with open(f"matches/football/{nom_fichier}.html", 'w', encoding='utf-8') as fichier_html:
         fichier_html.write(contenu_html)
 
     print(f"[JAMstack Generator] Fiche de match matérialisée : {nom_fichier}")
@@ -183,7 +183,7 @@ def creer_page_match_basketball(donnees):
 </html>
 """
 
-    with open(f"{nom_fichier}.html", 'w', encoding='utf-8') as fichier_html:
+    with open(f"matches/basketball/{nom_fichier}.html", 'w', encoding='utf-8') as fichier_html:
         fichier_html.write(contenu_html)
 
     print(f"[JAMstack Generator] Fiche de match matérialisée : {nom_fichier}")

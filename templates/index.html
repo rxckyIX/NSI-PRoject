@@ -10,15 +10,15 @@
     <p>La plateforme web d'enregistrement, de suivi et d'analyse de performances sportives amateurs.</p>
     
     <div class="button-grid">
-        <a class="sport-button" href="dashboard_rugby.html">
+        <a class="sport-button" href="{{ url_for('dashboard_rugby') }}">
             <span class="sport-emoji" role="img" aria-label="Rugby">🏉</span>
             <span>Dashboard Rugby</span>
         </a>
-        <a class="sport-button" href="dashboard_football.html">
+        <a class="sport-button" href="{{ url_for('dashboard_football') }}">
             <span class="sport-emoji" role="img" aria-label="Football">⚽</span>
             <span>Dashboard Football</span>
         </a>
-        <a class="sport-button" href="dashboard_basketball.html">
+        <a class="sport-button" href="{{ url_for('dashboard_basketball') }}">
             <span class="sport-emoji" role="img" aria-label="Basketball">🏀</span>
             <span>Dashboard Basketball</span>
         </a>

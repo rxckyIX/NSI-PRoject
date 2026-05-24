@@ -7,10 +7,10 @@
 </head>
 <body>
     <h1>Enregistrer une nouvelle feuille de match</h1>
-    <a href="dashboard_rugby.html">⬅ Retour au Dashboard de Rugby</a>
+    <a href="{{ url_for('dashboard_rugby') }}">⬅ Retour au Dashboard de Rugby</a>
 
     <div class="form-container">
-        <form action="http://127.0.0.1:5000/upload_rugby" method="POST">
+        <form action="{{ url_for('receptionner_formulaire_rugby') }}" method="POST">
             
             <h3>Informations Générales (Obligatoires)</h3>
             <input type="text" name="titre_match" placeholder="Titre du match (ex: Finale Inter-Lycee)" required><br>

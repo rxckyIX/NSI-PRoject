@@ -7,25 +7,35 @@
 </head>
 <body>
     <h1>Dashboard Principal - Rugby</h1>
-    <a href="index.html">⬅ Retour à l'accueil du site</a>
+    <a href="{{ url_for('home') }}">⬅ Retour à l'accueil du site</a>
     <br><br>
 
     <div class="form-container" style="max-width: 500px;">
         <h3>Analyse des Performances</h3>
         <p>Ajoutez un nouveau compte-rendu pour générer une fiche de match personnalisée.</p>
         
-        <a href="formrugby.html">
+        <a href="{{ url_for('form_rugby') }}">
             <button style="padding: 12px 25px; font-size: 1.1em; cursor: pointer; background-color: #0066cc; color: white; border: none; border-radius: 4px;">Add Game 🏉</button>
         </a>
     </div>
 
+    <div class="match-container">   
+        <div class="card">
+            <h3>Matchs Enregistrés</h3>
+            {% if matches %}
+                <ul>
+                    {% for match in matches %}
+                        <li><a href="{{ url_for('voir_match', sport='rugby', nom_match=match.replace('.html', '')) }}" style="color: #6a0dad;">{{ match }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Aucun match disponible pour le moment. Remplissez le formulaire.</p>
+            {% endif %}
+        </div>
+    </div>
+
     <hr style="width: 80%; margin: 40px auto;">
 
-    <h2>Notes techniques pour le jury de NSI</h2>
-    <p>
-        Les fichiers autonomes compilés par notre script Python
-        s'enregistrent sous la nomenclature :
-        <code>match_[titre]_[date].html</code>.
-    </p>
+
 </body>
 </html>

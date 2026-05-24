@@ -7,8 +7,7 @@
 </head>
 <body>
     <h1>Enregistrer une nouvelle feuille de match de football</h1>
-    <a href="dashboard_football.html">⬅ Retour au Dashboard Football</a>
-#this is for tut
+    <a href="{{ url_for('dashboard_football') }}">⬅ Retour au Dashboard Football</a>
     <div class="form-container">
         <!-- Formulaire d'envoi vers le backend Flask pour le football -->
         <form action="http://127.0.0.1:5000/upload_football" method="POST">
