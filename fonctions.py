@@ -2,6 +2,7 @@
 from flask import Blueprint, Flask, request, render_template, redirect, url_for
 import csv
 import generer_html
+import os
 
 # Initialisation de l'instance Flask pour la capture des flux formulaires
 app = Flask(__name__)
@@ -46,17 +47,32 @@ def evaluer_champ_optionnel(donnees_brutes, cle_dictionnaire, type_cible=int):
 
 
 def normaliser_lien_video(lien):
-    """Convertit un lien YouTube normal en lien embed et renvoie les liens embed déjà valides."""
+    """
+    Nettoie le lien et convertit les URLs YouTube (standards, courtes ou HTML complet)
+    en liens d'intégration 'embed' valides pour un <iframe>.
+    Extrait automatiquement l'URL si l'utilisateur a collé un tag <iframe> complet.
+    """
     lien_nettoye = lien.strip()
     if lien_nettoye == "":
         return "N/A"
 
-    # Conversion automatique pour YouTube standard
-    match = re.search(r'(?:v=|youtu\.be/)([A-Za-z0-9_-]{11})', lien_nettoye)
+    # 1. Si l'utilisateur a collé un bloc HTML <iframe> complet, on extrait l'URL du 'src'.
+    # src=["\'] : cherche l'attribut src suivi de guillemets simples ou doubles.
+    # ([^"\']+) : capture tout le texte jusqu'au prochain guillemet (l'URL elle-même).
+    iframe_match = re.search(r'src=["\']([^"\']+)["\']', lien_nettoye)
+    if iframe_match:
+        lien_nettoye = iframe_match.group(1) # On ne conserve que l'URL pure extraite du code HTML.
+
+    # 2. Identification de l'identifiant unique de la vidéo YouTube (11 caractères).
+    # (?:v=|youtu\.be/|embed/) : cherche un de ces 3 motifs sans le mémoriser.
+    # ([A-Za-z0-9_-]{11}) : capture précisément l'ID de 11 caractères qui suit.
+    match = re.search(r'(?:v=|youtu\.be/|embed/)([A-Za-z0-9_-]{11})', lien_nettoye)
+    
     if match:
+        # Si un ID est trouvé, on reconstruit une URL d'intégration propre.
         return f"https://www.youtube.com/embed/{match.group(1)}"
 
-    # Si le lien est déjà un embed valable pour YouTube ou Vimeo, on le conserve
+    # Si aucun ID YouTube n'est détecté mais que c'est déjà un lien embed connu (ex: Vimeo), on le garde.
     if 'youtube.com/embed/' in lien_nettoye or 'player.vimeo.com/video/' in lien_nettoye:
         return lien_nettoye
 
@@ -94,7 +110,10 @@ def enregistrer_dans_csv_rugby(donnees_finales):
     Persiste les informations extraites dans la table performances_rugby.csv.
     L'usage du mode='a' permet l'écriture séquentielle sans écrasement.
     """
-    with open('performances_rugby.csv', mode='a', newline='', encoding='utf-8') as fichier_csv:
+    output_dir = os.path.join('templates', 'matches', 'rugby')
+    os.makedirs(output_dir, exist_ok=True)
+    file_path = os.path.join(output_dir, 'performances_rugby.csv')
+    with open(file_path, mode='a', newline='', encoding='utf-8') as fichier_csv:
         scripteur = csv.writer(fichier_csv)
         scripteur.writerow([
             donnees_finales["titre_match"],
@@ -156,7 +175,10 @@ def enregistrer_dans_csv_football(donnees_finales):
     """
     Persiste les informations extraites dans la table performances_football.csv.
     """
-    with open('performances_football.csv', mode='a', newline='', encoding='utf-8') as fichier_csv:
+    output_dir = os.path.join('templates', 'matches', 'football')
+    os.makedirs(output_dir, exist_ok=True)
+    file_path = os.path.join(output_dir, 'performances_football.csv')
+    with open(file_path, mode='a', newline='', encoding='utf-8') as fichier_csv:
         scripteur = csv.writer(fichier_csv)
         scripteur.writerow([
             donnees_finales["titre_match"],
@@ -218,7 +240,10 @@ def enregistrer_dans_csv_basketball(donnees_finales):
     """
     Persiste les informations extraites dans la table performances_basketball.csv.
     """
-    with open('performances_basketball.csv', mode='a', newline='', encoding='utf-8') as fichier_csv:
+    output_dir = os.path.join('templates', 'matches', 'basketball')
+    os.makedirs(output_dir, exist_ok=True)
+    file_path = os.path.join(output_dir, 'performances_basketball.csv')
+    with open(file_path, mode='a', newline='', encoding='utf-8') as fichier_csv:
         scripteur = csv.writer(fichier_csv)
         scripteur.writerow([
             donnees_finales["titre_match"],

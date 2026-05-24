@@ -73,7 +73,7 @@ def creer_page_match_rugby(donnees):
     </div>
 
     <br>
-    <a href="dashboard_rugby.html">⬅ Retour au Dashboard Rugby</a>
+    <a href="{{url_for('dashboard_rugby')}}">⬅ Retour au Dashboard Rugby</a>
 </body>
 </html>
 """
@@ -142,7 +142,7 @@ def creer_page_match_football(donnees):
     </div>
 
     <br>
-    <a href="dashboard_football.html">⬅ Retour au Dashboard Football</a>
+    <a href="{{url_for('dashboard_football')}}">⬅ Retour au Dashboard Football</a>
 </body>
 </html>
 """
@@ -211,7 +211,7 @@ def creer_page_match_basketball(donnees):
     </div>
 
     <br>
-    <a href="dashboard_basketball.html">⬅ Retour au Dashboard Basketball</a>
+    <a href="{{url_for('dashboard_basketball')}}">⬅ Retour au Dashboard Basketball</a>
 </body>
 </html>
 """
