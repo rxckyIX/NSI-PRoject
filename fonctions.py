@@ -35,6 +35,7 @@ def form_basketball():
     return render_template('formbasketball.html')
 
 # --- PARTIE DATA  ---
+import re
 
 def evaluer_champ_optionnel(donnees_brutes, cle_dictionnaire, type_cible=int):
     """Retourne la valeur convertie si elle est renseignée, sinon la chaîne 'N/A'."""
@@ -42,6 +43,24 @@ def evaluer_champ_optionnel(donnees_brutes, cle_dictionnaire, type_cible=int):
     if valeur_texte == "":
         return "N/A"
     return type_cible(valeur_texte)
+
+
+def normaliser_lien_video(lien):
+    """Convertit un lien YouTube normal en lien embed et renvoie les liens embed déjà valides."""
+    lien_nettoye = lien.strip()
+    if lien_nettoye == "":
+        return "N/A"
+
+    # Conversion automatique pour YouTube standard
+    match = re.search(r'(?:v=|youtu\.be/)([A-Za-z0-9_-]{11})', lien_nettoye)
+    if match:
+        return f"https://www.youtube.com/embed/{match.group(1)}"
+
+    # Si le lien est déjà un embed valable pour YouTube ou Vimeo, on le conserve
+    if 'youtube.com/embed/' in lien_nettoye or 'player.vimeo.com/video/' in lien_nettoye:
+        return lien_nettoye
+
+    return lien_nettoye
 
 # ===== RUGBY =====
 def valider_et_filtrer_donnees_rugby(donnees_brutes):
@@ -61,6 +80,7 @@ def valider_et_filtrer_donnees_rugby(donnees_brutes):
         "resultat": donnees_brutes.get("resultat"),
         "essais": int(donnees_brutes.get("essais", 0)),
         "evaluation": donnees_brutes.get("evaluation"),
+        "video_url": normaliser_lien_video(donnees_brutes.get("video_url", "")),
         
         "passes_totales": evaluer_champ_optionnel(donnees_brutes, "passes", int),
         "plaquages": evaluer_champ_optionnel(donnees_brutes, "plaquages", int),
@@ -86,6 +106,7 @@ def enregistrer_dans_csv_rugby(donnees_finales):
             donnees_finales["resultat"],
             donnees_finales["essais"],
             donnees_finales["evaluation"],
+            donnees_finales["video_url"],
             donnees_finales["passes_totales"],
             donnees_finales["plaquages"],
             donnees_finales["temps_jeu"],
@@ -122,6 +143,7 @@ def valider_et_filtrer_donnees_football(donnees_brutes):
         "score_adversaire": int(donnees_brutes.get("score_adversaire", 0)),
         "resultat": donnees_brutes.get("resultat"),
         "evaluation": donnees_brutes.get("evaluation"),
+        "video_url": normaliser_lien_video(donnees_brutes.get("video_url", "")),
         
         "buts": int(donnees_brutes.get("buts", 0)),
         "passes_decisives": evaluer_champ_optionnel(donnees_brutes, "passes_decisives", int),
@@ -145,6 +167,7 @@ def enregistrer_dans_csv_football(donnees_finales):
             donnees_finales["score_adversaire"],
             donnees_finales["resultat"],
             donnees_finales["evaluation"],
+            donnees_finales["video_url"],
             donnees_finales["buts"],
             donnees_finales["passes_decisives"],
             donnees_finales["temps_jeu"],
@@ -182,6 +205,7 @@ def valider_et_filtrer_donnees_basketball(donnees_brutes):
         "score_adversaire": int(donnees_brutes.get("score_adversaire", 0)),
         "resultat": donnees_brutes.get("resultat"),
         "evaluation": donnees_brutes.get("evaluation"),
+        "video_url": normaliser_lien_video(donnees_brutes.get("video_url", "")),
         
         "points": int(donnees_brutes.get("points", 0)),
         "passes_ajustees": evaluer_champ_optionnel(donnees_brutes, "passes_ajustees", int),
@@ -205,6 +229,7 @@ def enregistrer_dans_csv_basketball(donnees_finales):
             donnees_finales["score_adversaire"],
             donnees_finales["resultat"],
             donnees_finales["evaluation"],
+            donnees_finales["video_url"],
             donnees_finales["points"],
             donnees_finales["passes_ajustees"],
             donnees_finales["temps_jeu"],

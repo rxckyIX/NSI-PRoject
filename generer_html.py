@@ -21,6 +21,14 @@ def creer_page_match_rugby(donnees):
     
     # Agrégation du score collectif
     score_global = f"{donnees['score_notre_equipe']} - {donnees['score_adversaire']}"
+    video_section = ""
+    if donnees.get("video_url") and donnees["video_url"] != "N/A":
+        video_section = f"""
+    <section style=\"margin: 30px 0;\">
+        <h2>Vidéo du match</h2>
+        <iframe src=\"{donnees['video_url']}\" width=\"100%\" height=\"480\" frameborder=\"0\" allowfullscreen loading=\"lazy\"></iframe>
+    </section>
+"""
     
     # Définition du gabarit HTML structurel (Moule Markup de Lambert)
     contenu_html = f"""<!DOCTYPE html>
@@ -40,6 +48,8 @@ def creer_page_match_rugby(donnees):
         <p style="font-size: 2em; margin: 10px 0; font-weight: bold; color: #111;">{score_global}</p>
         <p>Bilan de la confrontation : <strong>{donnees["resultat"]}</strong></p>
     </div>
+
+    {video_section}
 
     <div class="form-container" style="border-left: 5px solid #222; text-align: left;">
         <h3>Performances Individuelles Principales</h3>
@@ -83,6 +93,14 @@ def creer_page_match_football(donnees):
     """
     nom_fichier = normaliser_nom_fichier(donnees["titre_match"], donnees["date_match"])
     score_global = f"{donnees['score_notre_equipe']} - {donnees['score_adversaire']}"
+    video_section = ""
+    if donnees.get("video_url") and donnees["video_url"] != "N/A":
+        video_section = f"""
+    <section style=\"margin: 30px 0;\">
+        <h2>Vidéo du match</h2>
+        <iframe src=\"{donnees['video_url']}\" width=\"100%\" height=\"480\" frameborder=\"0\" allowfullscreen loading=\"lazy\"></iframe>
+    </section>
+"""
 
     contenu_html = f"""<!DOCTYPE html>
 <html lang="fr">
@@ -101,6 +119,8 @@ def creer_page_match_football(donnees):
         <p style="font-size: 2em; margin: 10px 0; font-weight: bold; color: #111;">{score_global}</p>
         <p>Résultat : <strong>{donnees["resultat"]}</strong></p>
     </div>
+
+    {video_section}
 
     <div class="form-container" style="border-left: 5px solid #00aa00; text-align: left;">
         <h3>Statistique Individuelle</h3>
@@ -140,6 +160,14 @@ def creer_page_match_basketball(donnees):
     """
     nom_fichier = normaliser_nom_fichier(donnees["titre_match"], donnees["date_match"])
     score_global = f"{donnees['score_notre_equipe']} - {donnees['score_adversaire']}"
+    video_section = ""
+    if donnees.get("video_url") and donnees["video_url"] != "N/A":
+        video_section = f"""
+    <section style=\"margin: 30px 0;\">
+        <h2>Vidéo du match</h2>
+        <iframe src=\"{donnees['video_url']}\" width=\"100%\" height=\"480\" frameborder=\"0\" allowfullscreen loading=\"lazy\"></iframe>
+    </section>
+"""
 
     contenu_html = f"""<!DOCTYPE html>
 <html lang="fr">
@@ -158,6 +186,8 @@ def creer_page_match_basketball(donnees):
         <p style="font-size: 2em; margin: 10px 0; font-weight: bold; color: #111;">{score_global}</p>
         <p>Résultat : <strong>{donnees["resultat"]}</strong></p>
     </div>
+
+    {video_section}
 
     <div class="form-container" style="border-left: 5px solid #ff6600; text-align: left;">
         <h3>Statistique Individuelle</h3>
