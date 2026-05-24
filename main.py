@@ -47,21 +47,21 @@ def form_basketball():
     return render_template('formbasketball.html')
 
 @app.route('/upload_rugby', methods=['POST'])
-def receptionner_formulaire_rugby():
+def upload_rugby():
     donnees_propres = valider_et_filtrer_donnees_rugby(request.form)
     enregistrer_dans_csv_rugby(donnees_propres)
     nom_fichier = generer_html.creer_page_match_rugby(donnees_propres)
     return redirect(url_for('voir_match', sport='rugby', nom_match=nom_fichier))
 
 @app.route('/upload_football', methods=['POST'])
-def receptionner_formulaire_football():
+def upload_football():
     donnees_propres = valider_et_filtrer_donnees_football(request.form)
     enregistrer_dans_csv_football(donnees_propres)
     nom_fichier = generer_html.creer_page_match_football(donnees_propres)
     return redirect(url_for('voir_match', sport='football', nom_match=nom_fichier))
 
 @app.route('/upload_basketball', methods=['POST'])
-def receptionner_formulaire_basketball():
+def upload_basketball():
     donnees_propres = valider_et_filtrer_donnees_basketball(request.form)
     enregistrer_dans_csv_basketball(donnees_propres)
     nom_fichier = generer_html.creer_page_match_basketball(donnees_propres)
