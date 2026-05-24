@@ -54,7 +54,7 @@ a {
 .button-grid {
     display: flex;
     justify-content: center;
-    gap: 30px;
+    gap: 20px;
     flex-wrap: wrap;
     margin: 40px auto;
     max-width: 1000px;
@@ -65,8 +65,8 @@ a {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 320px;
-    padding: 28px;
+    width: 240px;
+    padding: 20px;
     background-color: rgba(255, 255, 255, 0.1);
     border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 20px;
@@ -79,19 +79,20 @@ a {
     border-color: rgba(255, 255, 255, 0.4);
 }
 
-.port-emoji, .sport-emoji {
-    font-size: 88px;
-    line-height: 1;
+.sport-button img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
     margin-bottom: 18px;
     border-radius: 16px;
     background-color: rgba(255, 255, 255, 0.12);
     padding: 10px;
-    display: inline-block;
 }
 
 .sport-button span {
     display: block;
-    font-size: 1.2em;
+    font-size: 1.05em;
     font-weight: 700;
     color: #fff;
 }
+

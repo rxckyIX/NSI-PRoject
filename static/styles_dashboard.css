@@ -1,34 +1,95 @@
-/* Styles spécifiques pour dashboards */
+/* Style général */
 body {
     font-family: 'Segoe UI', Arial, sans-serif;
-    background: linear-gradient(135deg, #1a2b3c, #2b3c4d);
+    background: linear-gradient(135deg, #4b0082, #8a2be2);
     color: #fff;
     margin: 0;
-    padding: 20px;
+    padding: 0;
+    text-align: center;
 }
 
-.dashboard-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+/* Titre principal */
+h1 {
+    margin-top: 40px;
+    font-size: 2.5em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
 }
 
-.card {
-    background: rgba(255,255,255,0.05);
+/* Sous-titres */
+h2, h3 {
+    color: #ffd700;
+    margin-top: 30px;
+}
+
+/* Lien retour */
+a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #ffd700;
+}
+
+/* Conteneur formulaire */
+.form-container {
+    background-color: rgba(255,255,255,0.1);
+    margin: 30px auto;
+    padding: 25px;
     border-radius: 12px;
-    padding: 16px;
-    margin: 12px 0;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
-.card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+/* Boutons */
+button {
+    background-color: #0066cc;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 16px;
+/* Effet hover bouton avec animation */
+button:hover {
+    background-color: #0099ff;
+    transform: scale(1.05) rotate(-3deg);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+}
+
+/* Ligne de séparation */
+hr {
+    border: none;
+    height: 2px;
+    background: #fff;
+    width: 80%;
+    margin: 40px auto;
+}
+
+/* Balle de rugby décorative */
+.rugby-ball {
+    width: 80px;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    transition: transform 0.5s ease;
+}
+
+/* Effet hover sur la balle */
+.rugby-ball:hover {
+    transform: rotate(360deg) scale(1.2);
+}
+
+/* Bonus : icône rugby sur bouton */
+button::before {
+    content: "🏉 ";
+    font-size: 1.2em;
 }
