@@ -1,5 +1,6 @@
 # generer_html.py
 import os
+from flask import url_for
 def normaliser_nom_fichier(titre, date):
     """
     Algorithme de traitement de chaînes convertissant le titre et la date
@@ -73,7 +74,7 @@ def creer_page_match_rugby(donnees):
     </div>
 
     <br>
-    <a href="{{url_for('dashboard_rugby')}}">⬅ Retour au Dashboard Rugby</a>
+    <a href="{url_for('dashboard_rugby')}">⬅ Retour au Dashboard Rugby</a>
 </body>
 </html>
 """
@@ -142,7 +143,7 @@ def creer_page_match_football(donnees):
     </div>
 
     <br>
-    <a href="{{url_for('dashboard_football')}}">⬅ Retour au Dashboard Football</a>
+    <a href="{url_for('dashboard_football')}">⬅ Retour au Dashboard Football</a>
 </body>
 </html>
 """
@@ -211,7 +212,7 @@ def creer_page_match_basketball(donnees):
     </div>
 
     <br>
-    <a href="{{url_for('dashboard_basketball')}}">⬅ Retour au Dashboard Basketball</a>
+    <a href="{url_for('dashboard_basketball')}">⬅ Retour au Dashboard Basketball</a>
 </body>
 </html>
 """
