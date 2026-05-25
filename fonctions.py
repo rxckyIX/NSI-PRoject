@@ -72,7 +72,8 @@ def normaliser_lien_video(lien):
     if 'youtube.com/embed/' in lien_nettoye or 'player.vimeo.com/video/' in lien_nettoye:
         return lien_nettoye
 
-    return lien_nettoye
+    # Si le lien n'a aucun format valide reconnu, on l'invalide pour éviter de casser l'iframe.
+    return "N/A"
 
 
 # ===== RUGBY =====

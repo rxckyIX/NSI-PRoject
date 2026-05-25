@@ -1,7 +1,8 @@
 # generer_html.py
 import os
 from flask import url_for
-from fonctions import normaliser_nom_fichier
+from fonctions import normaliser_nom_fichier, normaliser_lien_video
+
 
 
 def creer_page_match_rugby(donnees, username):
@@ -18,12 +19,15 @@ def creer_page_match_rugby(donnees, username):
     
     # Agrégation du score collectif
     score_global = f"{donnees['score_notre_equipe']} - {donnees['score_adversaire']}"
+    
+
+    lien_propre = normaliser_lien_video(donnees.get("video_url", ""))
     video_section = ""
-    if donnees.get("video_url") and donnees["video_url"] != "N/A":
+    if lien_propre and lien_propre != "N/A":
         video_section = f"""
     <section style="margin: 30px 0;">
         <h2>Vidéo du match</h2>
-        <iframe src="{donnees['video_url']}" width="100%" height="480" frameborder="0" allowfullscreen loading="lazy"></iframe>
+        <iframe src="{lien_propre}" width="100%" height="480" frameborder="0" allowfullscreen loading="lazy"></iframe>
     </section>
 """
     
@@ -96,12 +100,13 @@ def creer_page_match_football(donnees, username):
     """
     nom_fichier = normaliser_nom_fichier(donnees["titre_match"], donnees["date_match"])
     score_global = f"{donnees['score_notre_equipe']} - {donnees['score_adversaire']}"
+    lien_propre = normaliser_lien_video(donnees.get("video_url", ""))
     video_section = ""
-    if donnees.get("video_url") and donnees["video_url"] != "N/A":
+    if lien_propre and lien_propre != "N/A":
         video_section = f"""
     <section style="margin: 30px 0;">
         <h2>Vidéo du match</h2>
-        <iframe src="{donnees['video_url']}" width="100%" height="480" frameborder="0" allowfullscreen loading="lazy"></iframe>
+        <iframe src="{lien_propre}" width="100%" height="480" frameborder="0" allowfullscreen loading="lazy"></iframe>
     </section>
 """
 
@@ -169,12 +174,13 @@ def creer_page_match_basketball(donnees, username):
   sL"""
     nom_fichier = normaliser_nom_fichier(donnees["titre_match"], donnees["date_match"])
     score_global = f"{donnees['score_notre_equipe']} - {donnees['score_adversaire']}"
+    lien_propre = normaliser_lien_video(donnees.get("video_url", ""))
     video_section = ""
-    if donnees.get("video_url") and donnees["video_url"] != "N/A":
+    if lien_propre and lien_propre != "N/A":
         video_section = f"""
     <section style="margin: 30px 0;">
         <h2>Vidéo du match</h2>
-        <iframe src="{donnees['video_url']}" width="100%" height="480" frameborder="0" allowfullscreen loading="lazy"></iframe>
+        <iframe src="{lien_propre}" width="100%" height="480" frameborder="0" allowfullscreen loading="lazy"></iframe>
     </section>
 """
 
