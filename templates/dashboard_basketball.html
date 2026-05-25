@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Dashboard Basket - July Verny</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles_dashboard.css') }}">
 </head>
 
 <body>
@@ -27,21 +28,8 @@
         </p>
 
         <a href="{{ url_for('form_basketball') }}">
-
-            <button style="
-                padding: 12px 25px;
-                font-size: 1.1em;
-                cursor: pointer;
-                background-color: #0066cc;
-                color: white;
-                border: none;
-                border-radius: 4px;
-            ">
-                Add Game 🏀
-            </button>
-
+            <button class="submit-button">Add Game 🏀</button>
         </a>
-
     </div>
 
     <!-- Section d'affichage des rapports générés -->
@@ -50,11 +38,15 @@
             <h3>Matchs Enregistrés</h3>
             <!-- Boucle Jinja2 listant dynamiquement les fichiers HTML de l'utilisateur -->
             {% if matches %}
-                <ul>
+                <div class="match-list">
                     {% for match in matches %}
-                        <li><a href="{{ url_for('voir_match', sport='basketball', nom_match=match.replace('.html', '')) }}" style="color: #6a0dad;">{{ match }}</a></li>
+                        <a href="{{ url_for('voir_match', sport='basketball', nom_match=match.replace('.html', '')) }}" class="match-item">
+                            <span class="match-icon">🏀</span>
+                            <span class="match-name">{{ match.replace('.html', '').replace('_', ' ') }}</span>
+                            <span class="match-arrow">➔</span>
+                        </a>
                     {% endfor %}
-                </ul>
+                </div>
             {% else %}
                 <p>Aucun match disponible pour le moment. Remplissez le formulaire.</p>
             {% endif %}

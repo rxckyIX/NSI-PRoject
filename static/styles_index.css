@@ -1,98 +1,160 @@
-/* Style général */
+/* 
+   Objectif : Feuille de style spécifique à la page d'accueil principale (index.html).
+   Elle gère la présentation du texte d'introduction (Hero section) et la grille 
+   des boutons interactifs (cartes) pour sélectionner sa discipline sportive.
+*/
+
 body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: linear-gradient(135deg, #4b0082, #8a2be2);
-    color: #fff;
-    text-align: center;
     margin: 0;
-    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f7f9fc;
+    /* display: flex permet de transformer le body en boîte flexible, facilitant l'alignement de son contenu */
+    display: flex;
+    /* flex-direction: column demande à afficher le header, main et footer de haut en bas (au lieu de gauche à droite) */
+    flex-direction: column;
+    /* min-height: 100vh assure que le fond prend 100% de la hauteur de l'écran (Viewport Height) même si la page est vide */
+    min-height: 100vh;
 }
 
-/* Titre principal */
-h1 {
-    margin-top: 50px;
-    font-size: 2.5em;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+/* Background décoratif léger avec dégradés pour texturer l'arrière-plan */
+/* ::before est un "pseudo-élément" CSS qui génère un calque virtuel dans le code HTML */
+body::before {
+    content: ""; /* 'content' est obligatoire pour que le calque existe, même vide */
+    position: fixed; /* L'arrière-plan reste fixe quand on fait défiler la page */
+    top: 0; left: 0; right: 0; bottom: 0;
+    /* radial-gradient() génère une boule de couleur au lieu d'un trait linéaire. 
+       On crée ici 2 taches subtiles (bleu et rouge) aux bords de l'écran. */
+    background-image: radial-gradient(circle at 15% 50%, rgba(52, 152, 219, 0.05), transparent 25%),
+                      radial-gradient(circle at 85% 30%, rgba(231, 76, 60, 0.05), transparent 25%);
+    /* z-index: -1 place ce calque derrière tous les autres éléments du site */
+    z-index: -1;
 }
 
-/* Paragraphe */
-p {
-    font-size: 1.2em;
-    margin: 20px auto;
-    max-width: 600px;
+.navbar {
+    display: flex;
+    /* justify-content: space-between repousse le logo à gauche et le bouton à droite */
+    justify-content: space-between;
+    /* align-items: center centre le logo et le bouton verticalement au milieu de la barre */
+    align-items: center;
+    background-color: #1a252f;
+    padding: 1rem 2rem;
+    color: #fff;
+    /* box-shadow: (X Y flou couleur) ajoute une ombre sous la barre de navigation */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.logout-button {
+    background-color: #e74c3c;
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: 5px;
+    font-weight: bold;
+    /* transition: permet d'animer fluidement le changement de couleur au survol (sur 0.3 secondes) */
+    transition: background 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #c0392b;
+}
+
+.hero {
+    text-align: center;
+    padding: 4rem 2rem 2rem;
+}
+
+.hero h1 {
+    font-size: 2.8rem;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+}
+
+.hero p.hero-intro {
+    font-size: 1.4rem;
+    color: #e74c3c;
+    font-weight: 600;
+    font-style: italic;
+    max-width: 700px;
+    /* margin: 0 auto permet de centrer un bloc de texte qui possède un max-width */
+    margin: 0 auto 1.5rem;
+    line-height: 1.5;
+}
+
+.hero p.hero-sub {
+    font-size: 1.1rem;
+    color: #7f8c8d;
+    max-width: 650px;
+    margin: 0 auto;
     line-height: 1.6;
 }
 
-/* Bouton */
-button {
-    background-color: #6a0dad;
-    border: none;
-    border-radius: 8px;
-    padding: 12px 25px;
-    font-size: 1.1em;
-    font-weight: bold;
-    color: #fff;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-}
-
-/* Effet hover sur le bouton */
-button:hover {
-    background-color: #8a2be2;
-    transform: scale(1.05);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.4);
-}
-
-/* Lien autour du bouton */
-a {
-    text-decoration: none;
+.dashboard-container {
+    /* flex-grow: 1 donne l'ordre à ce conteneur de grossir pour remplir tout l'espace libre restant */
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
 }
 
 .button-grid {
     display: flex;
+    /* gap: force un espace systématique de 2rem entre les différents boutons */
+    gap: 2rem;
     justify-content: center;
-    gap: 20px;
+    /* flex-wrap: wrap permet aux boutons de passer à la ligne s'il n'y a pas assez de place sur petit écran */
     flex-wrap: wrap;
-    margin: 40px auto;
     max-width: 1000px;
 }
 
 .sport-button {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    width: 220px;
+    text-align: center;
+    text-decoration: none;
+    color: #2c3e50;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    width: 240px;
-    padding: 20px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 20px;
-    transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
 }
 
 .sport-button:hover {
-    transform: translateY(-4px);
-    background-color: rgba(255, 255, 255, 0.18);
-    border-color: rgba(255, 255, 255, 0.4);
+    /* transform: translateY() "déplace" visuellement le bouton de 8 pixels vers le haut */
+    transform: translateY(-8px);
+    box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+    border-color: #3498db;
 }
 
-.sport-button img {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-    margin-bottom: 18px;
-    border-radius: 16px;
-    background-color: rgba(255, 255, 255, 0.12);
-    padding: 10px;
+.sport-emoji {
+    font-size: 4rem;
+    margin-bottom: 1rem;
 }
 
-.sport-button span {
-    display: block;
-    font-size: 1.05em;
-    font-weight: 700;
-    color: #fff;
+.sport-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
 }
 
+.sport-desc {
+    font-size: 0.9rem;
+    color: #95a5a6;
+}
+
+.footer {
+    text-align: center;
+    padding: 1.5rem;
+    background-color: #1a252f;
+    color: #bdc3c7;
+    font-size: 0.9rem;
+}

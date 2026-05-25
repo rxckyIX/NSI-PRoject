@@ -6,26 +6,46 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles_index.css') }}">
 </head>
 <body>
-    <a href="{{ url_for('logout') }}" class="logout-button">Déconnexion</a>
+    <nav class="navbar">
+        <div class="navbar-brand">🏆 July Verny</div>
+        <a href="{{ url_for('logout') }}" class="logout-button">Déconnexion</a>
+    </nav>
 
-    <!-- En-tête et présentation de l'application -->
-    <h1>Bienvenue sur July Verny</h1>
-    <p>La plateforme web d'enregistrement, de suivi et d'analyse de performances sportives amateurs.</p>
+    <header class="hero">
+        <h1>Bienvenue sur July Verny</h1>
+        <p class="hero-intro">
+            Avez-vous déjà marqué un triplé d'anthologie, pour l'oublier quelques mois plus tard 
+            et n'avoir plus rien à montrer aux recruteurs ?
+        </p>
+        <p class="hero-sub">
+            July Verny est la plateforme qu'il vous faut. Enregistrez vos matchs, analysez vos statistiques 
+            et bâtissez votre propre palmarès pour ne plus jamais rien oublier. 
+            Sélectionnez votre discipline pour commencer.
+        </p>
+    </header>
     
-    <!-- Grille de navigation vers les différents tableaux de bord sportifs -->
-    <div class="button-grid">
-        <a class="sport-button" href="{{ url_for('dashboard_rugby') }}">
-            <span class="sport-emoji" role="img" aria-label="Rugby">🏉</span>
-            <span>Dashboard Rugby</span>
-        </a>
-        <a class="sport-button" href="{{ url_for('dashboard_football') }}">
-            <span class="sport-emoji" role="img" aria-label="Football">⚽</span>
-            <span>Dashboard Football</span>
-        </a>
-        <a class="sport-button" href="{{ url_for('dashboard_basketball') }}">
-            <span class="sport-emoji" role="img" aria-label="Basketball">🏀</span>
-            <span>Dashboard Basketball</span>
-        </a>
-    </div>
+    <main class="dashboard-container">
+        <div class="button-grid">
+            <a class="sport-button" href="{{ url_for('dashboard_rugby') }}">
+                <span class="sport-emoji" role="img" aria-label="Rugby">🏉</span>
+                <span class="sport-title">Dashboard Rugby</span>
+                <span class="sport-desc">Analysez vos essais et plaquages</span>
+            </a>
+            <a class="sport-button" href="{{ url_for('dashboard_football') }}">
+                <span class="sport-emoji" role="img" aria-label="Football">⚽</span>
+                <span class="sport-title">Dashboard Football</span>
+                <span class="sport-desc">Suivez vos buts et passes</span>
+            </a>
+            <a class="sport-button" href="{{ url_for('dashboard_basketball') }}">
+                <span class="sport-emoji" role="img" aria-label="Basketball">🏀</span>
+                <span class="sport-title">Dashboard Basketball</span>
+                <span class="sport-desc">Consultez vos points et temps</span>
+            </a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        &copy; 2026 July Verny. Tous droits réservés.
+    </footer>
 </body>
 </html>

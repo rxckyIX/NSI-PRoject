@@ -1,10 +1,13 @@
-/* login.css - Feuille de style dédiée à la page de connexion */
+/* 
+   Objectif : Feuille de style dédiée exclusivement à la page d'authentification (login.html). 
+   Elle assure la mise en page centrée de la carte et du formulaire de connexion. 
+*/
 
 /* --- Styles Globaux (Body & Arrière-plan) --- */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #4b0082, #8a2be2);
-    color: #fff;
+    background-color: #f7f9fc;
+    color: #2c3e50;
     line-height: 1.6;
     margin: 0;
     padding: 20px;
@@ -12,59 +15,79 @@ body {
     min-height: 100vh;
 }
 
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: radial-gradient(circle at 15% 50%, rgba(52, 152, 219, 0.05), transparent 25%),
+                      radial-gradient(circle at 85% 30%, rgba(231, 76, 60, 0.05), transparent 25%);
+    z-index: -1;
+}
+
 /* --- Typographie (Titres) --- */
 h1 { 
-    color: #fff;
-    text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+    color: #2c3e50;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
 /* --- Conteneurs et Cartes (UI Components) --- */
 .card, .form-container {
     background: white;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
     max-width: 600px;
     margin: 20px auto;
     text-align: left;
-    color: #333;
+    color: #2c3e50;
 }
 
 /* --- Éléments de Formulaire --- */
 input, select, textarea {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-sizing: border-box; /* Crucial for layout */
+    border: 1px solid #bdc3c7;
+    border-radius: 8px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.2);
 }
 
 /* --- Boutons d'Action --- */
 button, .submit-button {
-    background-color: #6a0dad;
+    background-color: #3498db;
     color: white;
-    padding: 12px 20px;
+    padding: 14px 24px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
+    font-size: 1.1em;
     font-weight: bold;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 button:hover {
-    background-color: #8a2be2;
-    transform: scale(1.05);
+    background-color: #2980b9;
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.15);
 }
 
 /* --- Liens Hypertextes --- */
 a {
-    color: #fff;
+    color: #3498db;
     text-decoration: none;
     font-weight: bold;
 }
 
 a:hover {
+    color: #2980b9;
     text-decoration: underline;
 }
