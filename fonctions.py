@@ -1,45 +1,37 @@
-# app.py
-from flask import Blueprint, Flask, request, render_template, redirect, url_for
 import csv
-import generer_html
 import os
-
-# Initialisation de l'instance Flask pour la capture des flux formulaires
-app = Flask(__name__)
-
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-@app.route('/dashboard_rugby.html')
-def dashboard_rugby():
-    return render_template('dashboard_rugby.html')
-
-@app.route('/dashboard_football.html')
-def dashboard_football():
-    return render_template('dashboard_football.html')
-
-@app.route('/dashboard_basketball.html')
-def dashboard_basketball():
-    return render_template('dashboard_basketball.html')
-
-@app.route('/formrugby.html')
-def form_rugby():
-    return render_template('formrugby.html')
-
-@app.route('/formfootball.html')
-def form_football():
-    return render_template('formfootball.html')
-
-@app.route('/formbasketball.html')
-def form_basketball():
-    return render_template('formbasketball.html')
-
-# --- PARTIE DATA  ---
 import re
 
+
+def normaliser_nom_fichier(titre, date):
+    """
+    Objectif principal : Convertir le titre et la date en un nom de fichier standardisé.
+    
+    Entrée(s) :
+        - titre (str) : Titre brut du match.
+        - date (str) : Date du match sous format texte.
+        
+    Sortie(s) :
+        - (str) : Nom du fichier formaté, sans espaces ni caractères spéciaux.
+    """
+    titre_sain = titre.lower().replace(" ", "-")
+    for caractere in [":", "/", "'", ".", ",", '"', "?", "!", "@", "#", "$", "*"]:
+        titre_sain = titre_sain.replace(caractere, "")
+    return f"match_{titre_sain}_{date}"
+
+
 def evaluer_champ_optionnel(donnees_brutes, cle_dictionnaire, type_cible=int):
-    """Retourne la valeur convertie si elle est renseignée, sinon la chaîne 'N/A'."""
+    """
+    Objectif principal : Convertir un champ optionnel s'il existe, sinon renvoyer "N/A".
+    
+    Entrée(s) :
+        - donnees_brutes (dict) : Données issues du formulaire (request.form).
+        - cle_dictionnaire (str) : La clé à extraire.
+        - type_cible (type) : Le type attendu (int par défaut).
+        
+    Sortie(s) :
+        - (type_cible ou str) : La valeur convertie ou la chaîne "N/A".
+    """
     valeur_texte = donnees_brutes.get(cle_dictionnaire, "").strip()
     if valeur_texte == "":
         return "N/A"
@@ -48,9 +40,13 @@ def evaluer_champ_optionnel(donnees_brutes, cle_dictionnaire, type_cible=int):
 
 def normaliser_lien_video(lien):
     """
-    Nettoie le lien et convertit les URLs YouTube (standards, courtes ou HTML complet)
-    en liens d'intégration 'embed' valides pour un <iframe>.
-    Extrait automatiquement l'URL si l'utilisateur a collé un tag <iframe> complet.
+    Objectif principal : Convertir toute URL YouTube ou iframe en un lien 'embed' pur.
+    
+    Entrée(s) :
+        - lien (str) : Lien brut de la vidéo ou bloc HTML iframe.
+        
+    Sortie(s) :
+        - (str) : URL compatible pour intégration, ou "N/A" si vide.
     """
     lien_nettoye = lien.strip()
     if lien_nettoye == "":
@@ -78,14 +74,18 @@ def normaliser_lien_video(lien):
 
     return lien_nettoye
 
+
 # ===== RUGBY =====
 def valider_et_filtrer_donnees_rugby(donnees_brutes):
     """
-    Prend en entrée le dictionnaire brut issu de request.form.
-    Structure les champs obligatoires sous les bons types et applique la valeur
-    par défaut 'N/A' aux métriques scientifiques optionnelles si elles sont vides.
+    Objectif principal : Extraire et nettoyer les données du formulaire de rugby.
+    
+    Entrée(s) :
+        - donnees_brutes (dict) : Dictionnaire brut des requêtes.
+        
+    Sortie(s) :
+        - (dict) : Dictionnaire contenant les données sécurisées et typées.
     """
-    # Structuration du dictionnaire propre (Table de hachage)
     donnees_traitees = {
         "titre_match": donnees_brutes.get("titre_match"),
         "competition": donnees_brutes.get("competition"),
@@ -105,12 +105,19 @@ def valider_et_filtrer_donnees_rugby(donnees_brutes):
     }
     return donnees_traitees
 
-def enregistrer_dans_csv_rugby(donnees_finales):
+
+def enregistrer_dans_csv_rugby(donnees_finales, username):
     """
-    Persiste les informations extraites dans la table performances_rugby.csv.
-    L'usage du mode='a' permet l'écriture séquentielle sans écrasement.
+    Objectif principal : Sauvegarder les données de rugby dans le fichier CSV de l'utilisateur.
+    
+    Entrée(s) :
+        - donnees_finales (dict) : Données validées à sauvegarder.
+        - username (str) : Nom d'utilisateur de la session.
+        
+    Sortie(s) :
+        - Aucune. Modifie le fichier CSV physiquement.
     """
-    output_dir = os.path.join('templates', 'matches', 'rugby')
+    output_dir = os.path.join('templates', 'matches', 'rugby', username)
     os.makedirs(output_dir, exist_ok=True)
     file_path = os.path.join(output_dir, 'performances_rugby.csv')
     with open(file_path, mode='a', newline='', encoding='utf-8') as fichier_csv:
@@ -132,26 +139,17 @@ def enregistrer_dans_csv_rugby(donnees_finales):
             donnees_finales["distance"]
         ])
 
-@app.route('/upload_rugby', methods=['POST'])
-def receptionner_formulaire_rugby():
-    """
-    Point de contact de l'API interceptant l'envoi du formulaire de saisie rugby.
-    Supervise la validation, le stockage et instancie l'écriture du fichier HTML de match.
-    """
-    # 1. Traitement des types et des valeurs par défaut
-    donnees_propres = valider_et_filtrer_donnees_rugby(request.form)
-    
-    # 2. Sauvegarde de la performance dans la table persistante
-    enregistrer_dans_csv_rugby(donnees_propres)
-    
-    # 3. Activation du Générateur JAMstack pour créer la page de match autonome
-    nom_fichier = generer_html.creer_page_match_rugby(donnees_propres)
-    return redirect(url_for('voir_match', sport='rugby', nom_match=nom_fichier))
 
 # ===== FOOTBALL =====
 def valider_et_filtrer_donnees_football(donnees_brutes):
     """
-    Validation et structuration des données pour le football.
+    Objectif principal : Extraire et nettoyer les données du formulaire de football.
+    
+    Entrée(s) :
+        - donnees_brutes (dict) : Dictionnaire brut des requêtes.
+        
+    Sortie(s) :
+        - (dict) : Dictionnaire contenant les données sécurisées et typées.
     """
     donnees_traitees = {
         "titre_match": donnees_brutes.get("titre_match"),
@@ -171,11 +169,19 @@ def valider_et_filtrer_donnees_football(donnees_brutes):
     }
     return donnees_traitees
 
-def enregistrer_dans_csv_football(donnees_finales):
+
+def enregistrer_dans_csv_football(donnees_finales, username):
     """
-    Persiste les informations extraites dans la table performances_football.csv.
+    Objectif principal : Sauvegarder les données de foot dans le CSV de l'utilisateur.
+    
+    Entrée(s) :
+        - donnees_finales (dict) : Données validées à sauvegarder.
+        - username (str) : Nom d'utilisateur de la session.
+        
+    Sortie(s) :
+        - Aucune.
     """
-    output_dir = os.path.join('templates', 'matches', 'football')
+    output_dir = os.path.join('templates', 'matches', 'football', username)
     os.makedirs(output_dir, exist_ok=True)
     file_path = os.path.join(output_dir, 'performances_football.csv')
     with open(file_path, mode='a', newline='', encoding='utf-8') as fichier_csv:
@@ -196,27 +202,18 @@ def enregistrer_dans_csv_football(donnees_finales):
             donnees_finales["distance"]
         ])
 
-@app.route('/upload_football', methods=['POST'])
-def receptionner_formulaire_football():
-    """
-    Point de contact de l'API interceptant l'envoi du formulaire de saisie football.
-    Supervise la validation, le stockage et instancie l'écriture du fichier HTML de match.
-    """
-    # 1. Traitement des types et des valeurs par défaut
-    donnees_propres = valider_et_filtrer_donnees_football(request.form)
-    
-    # 2. Sauvegarde de la performance dans la table persistante
-    enregistrer_dans_csv_football(donnees_propres)
-    
-    # 3. Activation du Générateur JAMstack pour créer la page de match autonome
-    nom_fichier = generer_html.creer_page_match_football(donnees_propres)
-    return redirect(url_for('voir_match', sport='football', nom_match=nom_fichier))
 
 
 # ===== BASKETBALL =====
 def valider_et_filtrer_donnees_basketball(donnees_brutes):
     """
-    Validation et structuration des données pour le basketball.
+    Objectif principal : Extraire et nettoyer les données du formulaire de basketball.
+    
+    Entrée(s) :
+        - donnees_brutes (dict) : Dictionnaire brut des requêtes.
+        
+    Sortie(s) :
+        - (dict) : Dictionnaire contenant les données sécurisées et typées.
     """
     donnees_traitees = {
         "titre_match": donnees_brutes.get("titre_match"),
@@ -236,11 +233,19 @@ def valider_et_filtrer_donnees_basketball(donnees_brutes):
     }
     return donnees_traitees
 
-def enregistrer_dans_csv_basketball(donnees_finales):
+
+def enregistrer_dans_csv_basketball(donnees_finales, username):
     """
-    Persiste les informations extraites dans la table performances_basketball.csv.
+    Objectif principal : Sauvegarder les données basket dans le CSV de l'utilisateur.
+    
+    Entrée(s) :
+        - donnees_finales (dict) : Données validées à sauvegarder.
+        - username (str) : Nom d'utilisateur de la session.
+        
+    Sortie(s) :
+        - Aucune.
     """
-    output_dir = os.path.join('templates', 'matches', 'basketball')
+    output_dir = os.path.join('templates', 'matches', 'basketball', username)
     os.makedirs(output_dir, exist_ok=True)
     file_path = os.path.join(output_dir, 'performances_basketball.csv')
     with open(file_path, mode='a', newline='', encoding='utf-8') as fichier_csv:
@@ -260,22 +265,5 @@ def enregistrer_dans_csv_basketball(donnees_finales):
             donnees_finales["temps_jeu"],
             donnees_finales["distance"]
         ])
-
-
-@app.route('/upload_basketball', methods=['POST'])
-def receptionner_formulaire_basketball():
-    """
-    Point de contact de l'API interceptant l'envoi du formulaire de saisie basketball.
-    Supervise la validation, le stockage et instancie l'écriture du fichier HTML de match.
-    """
-    # 1. Traitement des types et des valeurs par défaut
-    donnees_propres = valider_et_filtrer_donnees_basketball(request.form)
-    
-    # 2. Sauvegarde de la performance dans la table persistante
-    enregistrer_dans_csv_basketball(donnees_propres)
-    
-    # 3. Activation du Générateur JAMstack pour créer la page de match autonome
-    nom_fichier = generer_html.creer_page_match_basketball(donnees_propres)
-    return redirect(url_for('voir_match', sport='basketball', nom_match=nom_fichier))
     
   

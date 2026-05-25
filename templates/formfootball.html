@@ -6,12 +6,16 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+    <a href="{{ url_for('logout') }}" class="logout-button">Déconnexion</a>
+
     <h1>Enregistrer une nouvelle feuille de match de football</h1>
     <a href="{{ url_for('dashboard_football') }}">⬅ Retour au Dashboard Football</a>
+    
+    <!-- Conteneur principal du formulaire -->
     <div class="form-container">
-        <!-- Formulaire d'envoi vers le backend Flask pour le football -->
         <form action="{{ url_for('upload_football') }}" method="POST">
 
+            <!-- Bloc 1 : Informations contextuelles de base -->
             <h3>Informations Générales (Obligatoires)</h3>
             <label for="titre_match">Titre du match :</label><br>
             <input type="text" id="titre_match" name="titre_match" placeholder="Ex: Coupe du District 2026" required><br>
@@ -87,6 +91,7 @@
                 <option value="00/01">00/01</option>
             </select><br>
 
+            <!-- Logique JavaScript pour basculer les menus déroulants de saison -->
             <script>
                 function toggleSeasonFormat(format) {
                     const cal = document.getElementById('saison_calendrier');
@@ -115,6 +120,7 @@
             <input type="text" id="video_url" name="video_url" placeholder="Ex: https://www.youtube.com/embed/ABCDEFG1234" ><br>
             <p style="font-size: 0.85em; color: #777; margin-bottom: 12px;">Collez le lien d'intégration direct de la vidéo. Pour la plupart des plateformes (YouTube, Vimeo, Dailymotion), utilisez Partager → Intégrer. <a href="https://support.google.com/youtube/answer/171780?hl=fr" target="_blank">Tutoriel</a>.</p>
 
+            <!-- Bloc 2 : Résultats chiffrés et issue de la rencontre -->
             <label for="score_notre_equipe">Score de notre équipe :</label><br>
             <input type="number" id="score_notre_equipe" name="score_notre_equipe" placeholder="Ex: 3" min="0" required><br>
 
@@ -142,6 +148,7 @@
             <label for="buts">Buts marqués :</label><br>
             <input type="number" id="buts" name="buts" placeholder="Ex: 2" min="0" value="0" required><br>
 
+            <!-- Bloc 3 : Métriques physiques facultatives -->
             <h3>Données Scientifiques Avancées (Optionnelles)</h3>
             <p style="font-size: 0.9em; color: #777; margin-bottom: 10px;">Ces champs sont facultatifs. Remplissez-les si vous avez des mesures précises.</p>
 

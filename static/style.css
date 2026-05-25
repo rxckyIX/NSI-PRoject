@@ -1,4 +1,6 @@
-/* style.css - For Dashboards, Forms, and Match Reports */
+/* style.css - Feuille de style principale (Dashboards, Formulaires, Rapports) */
+
+/* --- Styles Globaux (Body & Arrière-plan) --- */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #4b0082, #8a2be2);
@@ -10,11 +12,13 @@ body {
     min-height: 100vh;
 }
 
+/* --- Typographie (Titres) --- */
 h1 { 
     color: #fff;
     text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
 }
 
+/* --- Conteneurs et Cartes (UI Components) --- */
 .card, .form-container {
     background: white;
     padding: 25px;
@@ -26,6 +30,7 @@ h1 {
     color: #333;
 }
 
+/* --- Éléments de Formulaire --- */
 input, select, textarea {
     width: 100%;
     padding: 10px;
@@ -35,6 +40,7 @@ input, select, textarea {
     box-sizing: border-box; /* Crucial for layout */
 }
 
+/* --- Boutons d'Action --- */
 button, .submit-button {
     background-color: #6a0dad;
     color: white;
@@ -52,6 +58,7 @@ button:hover {
     transform: scale(1.05);
 }
 
+/* --- Liens Hypertextes --- */
 a {
     color: #fff;
     text-decoration: none;
@@ -60,4 +67,26 @@ a {
 
 a:hover {
     text-decoration: underline;
+}
+
+/* --- Bouton de Déconnexion Flottant --- */
+.logout-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #ff4c4c;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    z-index: 1000;
+    box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #ff1a1a;
+    transform: scale(1.05);
+    text-decoration: none;
 }

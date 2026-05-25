@@ -1,21 +1,17 @@
 # generer_html.py
 import os
 from flask import url_for
-def normaliser_nom_fichier(titre, date):
-    """
-    Algorithme de traitement de chaînes convertissant le titre et la date
-    en un nom de fichier standardisé dénué de caractères spéciaux et d'espaces.
-    """
-    titre_sain = titre.lower().replace(" ", "-")
-    for caractere in [":", "/", "'", ".", ",", '"', "?", "!", "@", "#", "$", "*"]:
-        titre_sain = titre_sain.replace(caractere, "")
-    return f"match_{titre_sain}_{date}"
+from fonctions import normaliser_nom_fichier
 
 
-def creer_page_match_rugby(donnees):
+def creer_page_match_rugby(donnees, username):
     """
-    Prend en paramètre le dictionnaire de données validées et écrit physiquement
-    la page finale statique sur le disque dur.
+    Entrée(s) :
+        - donnees (dict) : Dictionnaire avec toutes les informations du match.
+        - username (str) : L'identifiant de la session utilisateur.
+
+    Sortie(s) :
+        - (str) : Le nom du fichier généré (utile pour la redirection).
     """
     # Calcul dynamique du nom du fichier
     nom_fichier = normaliser_nom_fichier(donnees["titre_match"], donnees["date_match"])
@@ -40,6 +36,7 @@ def creer_page_match_rugby(donnees):
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
+    <a href="{url_for('logout')}" class="logout-button">Déconnexion</a>
     <h1>Fiche de Rencontre Rugby 🏉</h1>
     <h2>Match : {donnees["titre_match"]}</h2>
     <p><strong>Ligue / Compétition :</strong> {donnees["competition"]} | <strong>Date :</strong> {donnees["date_match"]}</p>
@@ -80,7 +77,7 @@ def creer_page_match_rugby(donnees):
 """
     
     # Écriture physique sur le disque dur
-    output_dir = os.path.join('templates', 'matches', 'rugby')
+    output_dir = os.path.join('templates', 'matches', 'rugby', username)
     os.makedirs(output_dir, exist_ok=True)
     with open(os.path.join(output_dir, f"{nom_fichier}.html"), 'w', encoding='utf-8') as fichier_html:
         fichier_html.write(contenu_html)
@@ -88,10 +85,14 @@ def creer_page_match_rugby(donnees):
     return nom_fichier
 
 
-def creer_page_match_football(donnees):
+def creer_page_match_football(donnees, username):
     """
-    Prend en paramètre le dictionnaire de données validées football et écrit physiquement
-    la page finale statique sur le disque dur.
+    Objectif principal : Générer et sauvegarder le HTML final du match de football.
+
+    Ent session utilisateur.
+
+    Sortie(s) :
+        - (str) : Le nom du fichier généré.
     """
     nom_fichier = normaliser_nom_fichier(donnees["titre_match"], donnees["date_match"])
     score_global = f"{donnees['score_notre_equipe']} - {donnees['score_adversaire']}"
@@ -112,7 +113,7 @@ def creer_page_match_football(donnees):
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h1>Fiche de Rencontre Football ⚽</h1>
+    <a href="{url_for('logout')}" class="logout-button">Déconnexion</a>
     <h2>Match : {donnees["titre_match"]}</h2>
     <p><strong>Compétition :</strong> {donnees["competition"]} | <strong>Date :</strong> {donnees["date_match"]}</p>
 
@@ -148,7 +149,7 @@ def creer_page_match_football(donnees):
 </html>
 """
 
-    output_dir = os.path.join('templates', 'matches', 'football')
+    output_dir = os.path.join('templates', 'matches', 'football', username)
     os.makedirs(output_dir, exist_ok=True)
     with open(os.path.join(output_dir, f"{nom_fichier}.html"), 'w', encoding='utf-8') as fichier_html:
         fichier_html.write(contenu_html)
@@ -157,11 +158,15 @@ def creer_page_match_football(donnees):
     return nom_fichier
 
 
-def creer_page_match_basketball(donnees):
+def creer_page_match_basketball(donnees, username):
     """
-    Prend en paramètre le dictionnaire de données validées basketball et écrit physiquement
-    la page finale statique sur le disque dur.
-    """
+    Objectif principal : Générer et sauvegarder le HTML final du match de basket.
+
+    Entrée(s) :
+        - donnees (dict) : Dictionnaire avec toutes les informations du match.
+        - username (str) : L'identifiant de la session utilisateur.
+
+  sL"""
     nom_fichier = normaliser_nom_fichier(donnees["titre_match"], donnees["date_match"])
     score_global = f"{donnees['score_notre_equipe']} - {donnees['score_adversaire']}"
     video_section = ""
@@ -181,9 +186,8 @@ def creer_page_match_basketball(donnees):
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
+    <a href="{url_for('logout')}" class="logout-button">Déconnexion</a>
     <h1>Fiche de Rencontre Basketball 🏀</h1>
-    <h2>Match : {donnees["titre_match"]}</h2>
-    <p><strong>Compétition :</strong> {donnees["competition"]} | <strong>Date :</strong> {donnees["date_match"]}</p>
 
     <div class="form-container" style="background-color: #ededed; font-size: 1.15em;">
         <p><strong>Adversaire :</strong> {donnees["adversaire"]}</p>
@@ -217,7 +221,7 @@ def creer_page_match_basketball(donnees):
 </html>
 """
 
-    output_dir = os.path.join('templates', 'matches', 'basketball')
+    output_dir = os.path.join('templates', 'matches', 'basketball', username)
     os.makedirs(output_dir, exist_ok=True)
     with open(os.path.join(output_dir, f"{nom_fichier}.html"), 'w', encoding='utf-8') as fichier_html:
         fichier_html.write(contenu_html)

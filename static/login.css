@@ -1,4 +1,6 @@
-/* style.css - For Dashboards, Forms, and Match Reports */
+/* login.css - Feuille de style dédiée à la page de connexion */
+
+/* --- Styles Globaux (Body & Arrière-plan) --- */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #4b0082, #8a2be2);
@@ -10,11 +12,13 @@ body {
     min-height: 100vh;
 }
 
+/* --- Typographie (Titres) --- */
 h1 { 
     color: #fff;
     text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
 }
 
+/* --- Conteneurs et Cartes (UI Components) --- */
 .card, .form-container {
     background: white;
     padding: 25px;
@@ -26,6 +30,7 @@ h1 {
     color: #333;
 }
 
+/* --- Éléments de Formulaire --- */
 input, select, textarea {
     width: 100%;
     padding: 10px;
@@ -35,6 +40,7 @@ input, select, textarea {
     box-sizing: border-box; /* Crucial for layout */
 }
 
+/* --- Boutons d'Action --- */
 button, .submit-button {
     background-color: #6a0dad;
     color: white;
@@ -52,6 +58,7 @@ button:hover {
     transform: scale(1.05);
 }
 
+/* --- Liens Hypertextes --- */
 a {
     color: #fff;
     text-decoration: none;

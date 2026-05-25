@@ -7,6 +7,7 @@
 </head>
 
 <body>
+    <a href="{{ url_for('logout') }}" class="logout-button">Déconnexion</a>
 
     <h1>Dashboard Principal - Basket</h1>
     <a href="{{ url_for('home') }}">
@@ -15,6 +16,7 @@
 
     <br><br>
 
+    <!-- Section d'appel à l'action : Ajouter un nouveau match -->
     <div class="form-container" style="max-width: 500px;">
 
         <h3>Analyse des Performances</h3>
@@ -42,9 +44,11 @@
 
     </div>
 
+    <!-- Section d'affichage des rapports générés -->
     <div class="match-container">   
         <div class="card">
             <h3>Matchs Enregistrés</h3>
+            <!-- Boucle Jinja2 listant dynamiquement les fichiers HTML de l'utilisateur -->
             {% if matches %}
                 <ul>
                     {% for match in matches %}
