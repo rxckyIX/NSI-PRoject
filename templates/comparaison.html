@@ -17,7 +17,7 @@
             </div>
         {% endif %}
 
-        <form action="/comparaison" method="POST" class="compare-form">
+        <form action="{{ url_for('gerer_comparaison') }}" method="POST" class="compare-form">
             <div class="match-selection-zone">
                 
                 {% for match in matchs %}
@@ -35,7 +35,7 @@
             
             <div class="action-zone">
                 <button type="submit" class="btn-submit">Lancer l'analyse statistique</button>
-                <a href="/" class="btn-back-home">Retour à l'accueil</a>
+                <a href="{{ url_for('home') }}" class="btn-back-home">Retour à l'accueil</a>
             </div>
         </form>
     </div>
