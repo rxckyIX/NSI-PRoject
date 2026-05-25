@@ -1,11 +1,25 @@
-/* Style général */
+/* 
+   Objectif : Feuille de style propre aux différents tableaux de bord (dashboard_rugby.html, etc.).
+   Elle contrôle l'affichage de l'historique des matchs, les boutons d'ajout et les décorations/animations thématiques.
+*/
+
 body {
     font-family: 'Segoe UI', Arial, sans-serif;
-    background: linear-gradient(135deg, #4b0082, #8a2be2);
-    color: #fff;
+    background-color: #f7f9fc;
+    color: #2c3e50;
     margin: 0;
     padding: 0;
     text-align: center;
+    min-height: 100vh;
+}
+
+body::before {
+    content: ""; 
+    position: fixed; 
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: radial-gradient(circle at 15% 50%, rgba(52, 152, 219, 0.05), transparent 25%),
+                      radial-gradient(circle at 85% 30%, rgba(231, 76, 60, 0.05), transparent 25%);
+    z-index: -1; 
 }
 
 /* Titre principal */
@@ -14,69 +28,77 @@ h1 {
     font-size: 2.5em;
     text-transform: uppercase;
     letter-spacing: 2px;
-    text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
+    color: #2c3e50;
 }
 
 /* Sous-titres */
 h2, h3 {
-    color: #ffd700;
+    color: #3498db;
     margin-top: 30px;
 }
 
 /* Lien retour */
 a {
-    color: #fff;
+    color: #3498db;
     text-decoration: none;
     font-weight: bold;
     transition: color 0.3s ease;
 }
 
 a:hover {
-    color: #ffd700;
+    color: #2980b9;
+    text-decoration: underline;
 }
 
 /* Conteneur formulaire */
 .form-container {
-    background-color: rgba(255,255,255,0.1);
+    background-color: white;
     margin: 30px auto;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    padding: 35px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    text-align: left;
+    max-width: 800px;
 }
 
 /* Boutons */
 button {
-    background-color: #0066cc;
+    background-color: #3498db;
     border: none;
-    border-radius: 8px;
-    padding: 12px 25px;
-    font-size: 1.1em;
+    border-radius: 10px;
+    padding: 15px 30px;
+    font-size: 1.3em;
     font-weight: bold;
     color: #fff;
+    /* inline-flex permet de garder le comportement d'un texte, mais le fonctionnement interne d'une "boite flex" (pour l'icône) */
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 /* Effet hover bouton avec animation */
 button:hover {
-    background-color: #0099ff;
+    background-color: #2980b9;
+    /* rotate(-3deg) incline légèrement le bouton vers la gauche lors du survol */
     transform: scale(1.05) rotate(-3deg);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.15);
 }
 
 /* Ligne de séparation */
 hr {
     border: none;
     height: 2px;
-    background: #fff;
+    background: #bdc3c7;
     width: 80%;
     margin: 40px auto;
 }
 
 /* Balle de rugby décorative */
 .rugby-ball {
-    width: 80px;
+    width: 120px;
     position: fixed;
     bottom: 20px;
     right: 20px;
@@ -85,11 +107,40 @@ hr {
 
 /* Effet hover sur la balle */
 .rugby-ball:hover {
-    transform: rotate(360deg) scale(1.2);
+    /* rotate(360deg) ordonne à l'image de faire un tour complet (360 degrés) sur elle-même */
+    transform: rotate(360deg) scale(1.3);
 }
 
-/* Bonus : icône rugby sur bouton */
-button::before {
-    content: "🏉 ";
-    font-size: 1.2em;
+/* Liste de l'historique des matchs  */
+.match-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.match-item {
+    display: flex;
+    align-items: center;
+    background-color: #f7f9fc;
+    padding: 15px 20px;
+    border-radius: 10px;
+    color: #2c3e50;
+    font-weight: 600;
+    border: 1px solid #e1e8ed;
+    transition: all 0.3s ease;
+}
+
+.match-item:hover {
+    background-color: #3498db;
+    color: white;
+    transform: translateX(8px);
+    box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+    border-color: #3498db;
+    text-decoration: none;
+}
+
+.match-name {
+    flex-grow: 1;
+    text-transform: capitalize;
 }
