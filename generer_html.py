@@ -25,9 +25,9 @@ def creer_page_match_rugby(donnees):
     video_section = ""
     if donnees.get("video_url") and donnees["video_url"] != "N/A":
         video_section = f"""
-    <section style=\"margin: 30px 0;\">
+    <section style="margin: 30px 0;">
         <h2>Vidéo du match</h2>
-        <iframe src=\"{donnees['video_url']}\" width=\"100%\" height=\"480\" frameborder=\"0\" allowfullscreen loading=\"lazy\"></iframe>
+        <iframe src="{donnees['video_url']}" width="100%" height="480" frameborder="0" allowfullscreen loading="lazy"></iframe>
     </section>
 """
     
@@ -98,9 +98,9 @@ def creer_page_match_football(donnees):
     video_section = ""
     if donnees.get("video_url") and donnees["video_url"] != "N/A":
         video_section = f"""
-    <section style=\"margin: 30px 0;\">
+    <section style="margin: 30px 0;">
         <h2>Vidéo du match</h2>
-        <iframe src=\"{donnees['video_url']}\" width=\"100%\" height=\"480\" frameborder=\"0\" allowfullscreen loading=\"lazy\"></iframe>
+        <iframe src="{donnees['video_url']}" width="100%" height="480" frameborder="0" allowfullscreen loading="lazy"></iframe>
     </section>
 """
 
@@ -167,9 +167,9 @@ def creer_page_match_basketball(donnees):
     video_section = ""
     if donnees.get("video_url") and donnees["video_url"] != "N/A":
         video_section = f"""
-    <section style=\"margin: 30px 0;\">
+    <section style="margin: 30px 0;">
         <h2>Vidéo du match</h2>
-        <iframe src=\"{donnees['video_url']}\" width=\"100%\" height=\"480\" frameborder=\"0\" allowfullscreen loading=\"lazy\"></iframe>
+        <iframe src="{donnees['video_url']}" width="100%" height="480" frameborder="0" allowfullscreen loading="lazy"></iframe>
     </section>
 """
 
