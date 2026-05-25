@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bilan Comparatif - Style Sofascore</title>
+    <link rel="stylesheet" href="../static/styles_dashboard.css">
+</head>
+<body>
+    <div class="sofascore-container">
+        
+        <div class="sofascore-header">
+            <div class="player-match-card side-a">
+                <h3>Match A (Ancien)</h3>
+                <p class="match-name">{{ match_a.titre_match }}</p>
+                <span class="match-badge-date">{{ match_a.date_match }}</span>
+            </div>
+            
+            <div class="vs-circle">VS</div>
+            
+            <div class="player-match-card side-b">
+                <h3>Match B (Récent)</h3>
+                <p class="match-name">{{ match_b.titre_match }}</p>
+                <span class="match-badge-date">{{ match_b.date_match }}</span>
+            </div>
+        </div>
+
+        <div class="sofascore-table">
+            <div class="table-header-row">
+                <span>Match A</span>
+                <span class="stat-label-header">Critères Analytiques</span>
+                <span>Match B</span>
+            </div>
+
+            {% for cle, valeur_a in match_a.items() %}
+                {% if cle not in ['titre_match', 'date_match', 'sport'] %}
+                    {% set valeur_b = match_b[cle] %}
+                    {% set delta = evolution[cle] %}
+                    
+                    <div class="sofascore-row">
+                        <span class="val-a {% if delta < 0 %}winner-val{% endif %}">
+                            {{ valeur_a }}
+                        </span>
+                        
+                        <span class="stat-label">
+                            {{ cle | replace('_', ' ') | capitalize }}
+                        </span>
+                        
+                        <span class="val-b {% if delta > 0 %}winner-val{% endif %}">
+                            {{ valeur_b }} 
+                            
+                            <small class="delta-badge {% if delta > 0 %}up{% elif delta < 0 %}down{% else %}equal{% endif %}">
+                                ({% if delta > 0 %}+{% endif %}{{ delta }})
+                            </small>
+                        </span>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        
+        <div class="back-zone">
+            <a href="/comparaison" class="btn-back">← Comparer deux autres sessions</a>
+        </div>
+    </div>
+</body>
+</html>

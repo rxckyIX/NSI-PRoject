@@ -93,3 +93,234 @@ button::before {
     content: "🏉 ";
     font-size: 1.2em;
 }
+/* --- MODULE DE COMPARAISON ANALYTIQUE (SOFASCORE STYLE) --- */
+
+.sofascore-container {
+    max-width: 850px;
+    margin: 40px auto;
+    font-family: Arial, sans-serif;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    padding: 30px;
+}
+
+.subtitle {
+    color: #7f8c8d;
+    margin-bottom: 25px;
+}
+
+/* Zone de sélection des cases à cocher */
+.match-selection-zone {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.checkbox-card {
+    border: 2px solid #eaeded;
+    padding: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: #fafbfc;
+    transition: all 0.2s ease-in-out;
+}
+
+.checkbox-card:hover {
+    border-color: #3498db;
+    background: #f4f6f7;
+}
+
+.checkbox-card input[type="checkbox"] {
+    margin-top: 4px;
+    transform: scale(1.2);
+}
+
+.card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.match-title {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.match-date {
+    font-size: 0.85rem;
+    color: #7f8c8d;
+}
+
+.match-sport-badge {
+    align-self: flex-start;
+    font-size: 0.75rem;
+    background: #e8f4fd;
+    color: #2980b9;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+/* En-tête du face à face */
+.sofascore-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #f1f3f5;
+    margin-bottom: 25px;
+}
+
+.player-match-card {
+    text-align: center;
+    flex: 1;
+}
+
+.player-match-card h3 {
+    font-size: 0.9rem;
+    color: #95a5a6;
+    text-transform: uppercase;
+    margin: 0 0 5px 0;
+}
+
+.match-name {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #2c3e50;
+    margin: 0 0 8px 0;
+}
+
+.match-badge-date {
+    background: #e9ecef;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: #495057;
+}
+
+.vs-circle {
+    background: #0284c7;
+    color: #ffffff;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.85rem;
+    box-shadow: 0 2px 6px rgba(2, 132, 199, 0.3);
+}
+
+/* Tableau de comparaison */
+.sofascore-table {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #eef2f3;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table-header-row, .sofascore-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    text-align: center;
+    padding: 14px 10px;
+    align-items: center;
+}
+
+.table-header-row {
+    font-weight: bold;
+    background: #f8f9fa;
+    color: #7f8c8d;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #eef2f3;
+}
+
+.sofascore-row {
+    border-bottom: 1px solid #f8f9fa;
+}
+
+.sofascore-row:last-child {
+    border-bottom: none;
+}
+
+.sofascore-row:hover {
+    background: #fdfefe;
+}
+
+.stat-label {
+    font-weight: 600;
+    color: #34495e;
+}
+
+/* Gestion de l'avantage numérique (Couleur Sofascore) */
+.winner-val {
+    font-weight: bold;
+    color: #0284c7;
+}
+
+/* Badges de progression (Deltas) */
+.delta-badge {
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-left: 6px;
+}
+
+.delta-badge.up { color: #27ae60; }      /* Vert si hausse */
+.delta-badge.down { color: #c0392b; }    /* Rouge si baisse */
+.delta-badge.equal { color: #7f8c8d; }   /* Égalité */
+
+/* Alertes d'erreur */
+.alert-error {
+    background-color: #fadbd8;
+    color: #78281f;
+    padding: 12px 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    border-left: 5px solid #cd6155;
+}
+
+/* Boutons et actions */
+.action-zone {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.btn-submit {
+    background: #0284c7;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: background 0.2s;
+}
+
+.btn-submit:hover { background: #026ca3; }
+
+.btn-back-home, .btn-back {
+    display: inline-block;
+    padding: 12px 20px;
+    color: #7f8c8d;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.2s;
+}
+
+.btn-back-home:hover, .btn-back:hover { color: #2c3e50; }
+
+.back-zone {
+    text-align: center;
+    margin-top: 25px;
+}

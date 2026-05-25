@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sélection Comparaison - Projet NSI</title>
+    <link rel="stylesheet" href="../static/styles_dashboard.css">
+</head>
+<body>
+    <div class="sofascore-container">
+        <h2>Outil de Comparaison Analytique</h2>
+        <p class="subtitle">Sélectionnez exactement <strong>deux rencontres</strong> pour mesurer votre progression.</p>
+
+        {% if erreur %}
+            <div class="alert-error">
+                <strong>⚠️ Attention :</strong> {{ erreur }}
+            </div>
+        {% endif %}
+
+        <form action="/comparaison" method="POST" class="compare-form">
+            <div class="match-selection-zone">
+                
+                {% for match in matchs %}
+                    <label class="checkbox-card">
+                        <input type="checkbox" name="matchs_choisis" value="{{ match.titre_match }}_{{ match.date_match }}">
+                        <div class="card-info">
+                            <span class="match-title">{{ match.titre_match }}</span>
+                            <span class="match-date">📅 {{ match.date_match }}</span>
+                            <span class="match-sport-badge">{{ match.sport | capitalize }}</span>
+                        </div>
+                    </label>
+                {% endfor %}
+
+            </div>
+            
+            <div class="action-zone">
+                <button type="submit" class="btn-submit">Lancer l'analyse statistique</button>
+                <a href="/" class="btn-back-home">Retour à l'accueil</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
