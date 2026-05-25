@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>July Verny - Accueil</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles_index.css') }}">
+</head>
+<body>
+    <a href="{{ url_for('logout') }}" class="logout-button">Déconnexion</a>
+
+    <!-- En-tête et présentation de l'application -->
+    <h1>Bienvenue sur July Verny</h1>
+    <p>La plateforme web d'enregistrement, de suivi et d'analyse de performances sportives amateurs.</p>
+    
+    <!-- Grille de navigation vers les différents tableaux de bord sportifs -->
+    <div class="button-grid">
+        <a class="sport-button" href="{{ url_for('dashboard_rugby') }}">
+            <span class="sport-emoji" role="img" aria-label="Rugby">🏉</span>
+            <span>Dashboard Rugby</span>
+        </a>
+        <a class="sport-button" href="{{ url_for('dashboard_football') }}">
+            <span class="sport-emoji" role="img" aria-label="Football">⚽</span>
+            <span>Dashboard Football</span>
+        </a>
+        <a class="sport-button" href="{{ url_for('dashboard_basketball') }}">
+            <span class="sport-emoji" role="img" aria-label="Basketball">🏀</span>
+            <span>Dashboard Basketball</span>
+        </a>
+    </div>
+</body>
+</html>

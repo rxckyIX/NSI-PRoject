@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+</head>
+<body>
+    <a href="{{ url_for('logout') }}" class="logout-button">Déconnexion</a>
+
+    <!-- Conteneur principal d'authentification -->
+    <div class="login-container">
+        <div class="login-card">
+            <h1>Connexion</h1>
+            <p class="subtitle">Accédez à votre dashboard</p>
+            
+            <!-- Formulaire de connexion sécurisé -->
+            <form method="POST" action="{{ url_for('login') }}">
+                <label>Nom d'utilisateur</label>
+                <input type="text" name="username" placeholder="Entrez votre identifiant" required>
+            </form>
+            <p class="footer-text">NSI Project • Secure Login System</p>
+        </div>
+    </div>
+</body>
+</html>
